@@ -6,7 +6,7 @@ export default function Home() {
       <a href="/react-lottie-player">React Lottie Player</a>
       <a href="/lottiefiles-player">LottieFiles Player</a>
       <a href="/rive">Rive</a>
-      <a href="/rive-js">Rive JS</a>
+      {/* <a href="/rive-js">Rive JS</a> */}
       <a href="/jitter">Jitter</a>
     </div>
   );
