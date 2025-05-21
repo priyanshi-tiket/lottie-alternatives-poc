@@ -1,12 +1,13 @@
 "use client";
 
 import Lottie from "react-lottie-player";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function ReactLottiePlayerPage() {
   const [animationData, setAnimationData] = useState(null);
   const [fetchTime, setFetchTime] = useState("");
   const [renderTime, setRenderTime] = useState("");
+  const renderStartRef = useRef(0);
 
   useEffect(() => {
     const startFetch = performance.now();
@@ -16,19 +17,18 @@ export default function ReactLottiePlayerPage() {
       .then((data) => {
         const endFetch = performance.now();
         setFetchTime(`${(endFetch - startFetch).toFixed(2)} ms`);
+        renderStartRef.current = performance.now();
         setAnimationData(data);
       });
   }, []);
 
   useEffect(() => {
-    if (animationData) {
-      const startRender = performance.now();
+    if (!animationData) return;
 
-      Promise.resolve().then(() => {
-        const endRender = performance.now();
-        setRenderTime(`${(endRender - startRender).toFixed(2)} ms`);
-      });
-    }
+    requestAnimationFrame(() => {
+      const endRender = performance.now();
+      setRenderTime(`${(endRender - renderStartRef.current).toFixed(2)} ms`);
+    });
   }, [animationData]);
 
   return (
@@ -43,7 +43,7 @@ export default function ReactLottiePlayerPage() {
         />
       )}
       <p>Fetch JSON Time: {fetchTime}</p>
-      <p>Render Init Time: {renderTime}</p>
+      <p>Render Time After JSON Load: {renderTime}</p>
     </div>
   );
 }
