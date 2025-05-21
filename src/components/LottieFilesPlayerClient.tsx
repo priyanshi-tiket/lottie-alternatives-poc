@@ -6,26 +6,28 @@ export default function LottieFilesPlayerClient() {
   const [loadTime, setLoadTime] = useState("");
 
   useEffect(() => {
-    const loadScript = async () => {
-      await import("@lottiefiles/lottie-player");
-    };
-    loadScript();
+    import("@lottiefiles/lottie-player");
   }, []);
 
   useEffect(() => {
     const start = performance.now();
 
-    const checkPlayer = () => {
-      const player = document.querySelector("lottie-player");
-      if (player) {
-        player.addEventListener("load", () => {
-          const end = performance.now();
-          setLoadTime(`${(end - start).toFixed(2)} ms`);
-        });
-      }
+    const handleReady = () => {
+      const end = performance.now();
+      setLoadTime(`${(end - start).toFixed(2)} ms`);
     };
 
-    setTimeout(checkPlayer, 100);
+    const player = document.querySelector("lottie-player");
+
+    if (player) {
+      player.addEventListener("ready", handleReady);
+    }
+
+    return () => {
+      if (player) {
+        player.removeEventListener("ready", handleReady);
+      }
+    };
   }, []);
 
   return (
