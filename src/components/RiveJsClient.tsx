@@ -9,7 +9,6 @@ export default function RiveJsClient() {
 
   useEffect(() => {
     const start = performance.now();
-
     const rive = new Rive.Rive({
       src: "/example.riv",
       canvas: canvasRef.current as HTMLCanvasElement,
@@ -20,7 +19,13 @@ export default function RiveJsClient() {
       },
     });
 
-    return () => rive.cleanup();
+    return () => {
+      try {
+        rive.cleanup();
+      } catch (e) {
+        console.warn("Rive cleanup error ignored:", e);
+      }
+    };
   }, []);
 
   return (
