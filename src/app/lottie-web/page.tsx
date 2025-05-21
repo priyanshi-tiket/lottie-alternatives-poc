@@ -1,14 +1,5 @@
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-
-const LottieWebClient = dynamic(() => import("../../components/LottieWeb"), {
-  ssr: false,
-});
+import LottieWebWrapper from "../../components/LottieWebWrapper";
 
 export default function LottieWebPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LottieWebClient />
-    </Suspense>
-  );
+  return <LottieWebWrapper />;
 }
