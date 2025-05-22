@@ -6,5 +6,9 @@ const RiveJsClient = dynamic(() => import("../../components/RiveJsClient"), {
 });
 
 export default function RiveJsPage() {
-  return <RiveJsClient />;
+  return (
+    <div>
+      <RiveJsClient />
+    </div>
+  );
 }

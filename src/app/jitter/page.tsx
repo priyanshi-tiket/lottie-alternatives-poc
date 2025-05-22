@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import HeavyPage from "../heavy/page";
 
 export default function JitterPage() {
   const [loadTime, setLoadTime] = useState("");
@@ -36,6 +37,7 @@ export default function JitterPage() {
       <h2>Jitter (WebM/MP4)</h2>
       <video ref={videoRef} src="/jitter.mp4" autoPlay loop muted width="300" />
       <p>Load Time: {loadTime}</p>
+      <HeavyPage />
     </div>
   );
 }
